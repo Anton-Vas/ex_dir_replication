@@ -1,0 +1,20 @@
+target_sources(
+    ${CMAKE_PROJECT_NAME}
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/Logger.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Logger.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Timer.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Timer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Parser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Parser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Replicator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Replicator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Signal.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Signal.cpp
+)
+
+target_include_directories(
+    ${CMAKE_PROJECT_NAME}
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}
+)
