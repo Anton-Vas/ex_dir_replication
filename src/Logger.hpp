@@ -6,10 +6,14 @@
 #include <fstream>
 #include <filesystem>
 
+#include <chrono>
+#include <iomanip>
+
 #include <Timer.hpp>
 
 
 using namespace std;
+namespace fs = std::filesystem;
 
 
 class Logger{
@@ -27,6 +31,8 @@ public:
     void            log                 (const int _head, const string& _msg);
     void            log_terminal        (const int _head, const string& _msg);
     void            auto_save           ();
+    void            set_paths           ();
+    void            set_log_path        (const string& _p);
         
 
         /* log style */
@@ -64,19 +70,20 @@ private:
 
 
         /* log file */
-    const string    file_path           = {"log/"};
+    string          file_path           = {""};
+    string          file_old_path       = {"/home/dev/Desktop/test_veeam/build/log"};
     string          file_name           = {""};
     const string    file_type           = {".txt"};
-    filesystem::path    file_path_mn    = {""};
+    fs::path        file_path_mn        = {""};
     fstream         file_mn;
+
     bool            file_is_open        ();
     void            file_create         (const string& _file_name);
     void            file_open           (const string& _file_name);
     void            file_close          ();
-    void            file_log            (const string& _msg);
     string          get_file_path       ();
-
     string          assemble_msg        (const int _head, const string& _msg);
+
     Timer&          t                   = Timer::get_instance();
 
 };

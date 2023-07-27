@@ -3,11 +3,9 @@
 
 
 Logger::Logger                      (){
-    
-    ///> log file management
-    file_name.append(t.get_date() + "_" + t.get_time() + "_log_file" + file_type);
-    file_open( get_file_path() + file_name);
 
+    file_name.append(t.get_date() + "_" + t.get_time() + "_log_file" + file_type);
+    file_open( file_old_path + "/" + file_name);
 }
 
 Logger::~Logger                     (){
@@ -25,7 +23,7 @@ void Logger::log                    (const int _head, const string& _msg){
     cout << msg << endl;
 
     ///> log file
-    file_log(msg);
+    file_mn << msg << "\n";
 }
 
 void Logger::log_terminal           (const int _head, const string& _msg){
@@ -36,9 +34,28 @@ void Logger::log_terminal           (const int _head, const string& _msg){
 void Logger::auto_save              (){
     
     file_close();
-    file_open(get_file_path() + file_name);
+    file_open( file_path + "/" + file_name);
+    while(!file_mn.is_open()){}
 
-    log(INFO, "Log file AUTO_SAVE sequence");
+    // log(INFO, "log file autosave");
+}
+
+void Logger::set_paths              (){
+
+    ///> log file management
+    /*  DESCRIPTION:
+    *   The 'log' file is created at the moment of the log obj. creation so i could add msg right away.
+    *   At first the 'log' file placed in the temporary place but as the 'log_path' arrives, i change its location and continue logging there.
+    */
+    file_close();
+    fs::copy_file(file_old_path + "/" + file_name, file_path + "/" + file_name);
+    fs::remove(file_old_path + "/" + file_name);
+    file_open( file_path + "/" + file_name);
+}
+
+void Logger::set_log_path        (const string& _p){
+
+    file_path.append(_p);
 }
 
 
@@ -64,11 +81,6 @@ void Logger::file_close             (){
     if(file_is_open()){
         file_mn.close();
     }
-}
-
-void Logger::file_log               (const string& _msg){
-    
-    file_mn << _msg << "\n";
 }
 
 string  Logger::get_file_path       (){

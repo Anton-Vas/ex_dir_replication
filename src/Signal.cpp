@@ -22,14 +22,16 @@ void SignalHandler::set_exit_signal     (bool _bExitSignal)
 }
 
 /**
-* @param[in] _ignored Not used but required by function prototype
-*                     to match required handler.
+*   '_ignored' Not used but required by function prototype to match required handler.
 */
 void SignalHandler::exit_signal_handler     (int _ignored)
 {
     mb_got_exit_signal = true;
 }
 
+/**
+ *  wait for 'Ctrl+C'
+ */
 void SignalHandler::setup_signal_handlers   ()
 {
     if (signal((int) SIGINT, SignalHandler::exit_signal_handler) == SIG_ERR)

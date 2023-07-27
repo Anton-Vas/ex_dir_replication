@@ -19,9 +19,10 @@ int main(int argc, char* argv[]){
     SignalHandler   sig;
     
     ///> pass paths
-    rep.gep_paths(&parser);
+    rep.set_paths(&parser);
+    log.set_paths();
 
-    ///> signal setup
+    ///> LINUX signal setup
     sig.setup_signal_handlers();
     
     ///> loop
@@ -33,7 +34,7 @@ int main(int argc, char* argv[]){
                 rep.copy();
             }
 
-            ///> file auto saving (in case of a critical error will save some of log file)
+            ///> file auto saving (in case of a critical error - we will save some of logs)
             if(t.file_elapsed()){
                 log.auto_save();
             }
@@ -42,6 +43,4 @@ int main(int argc, char* argv[]){
     catch(SignalException& e){
         log.log(log.WARN, "Exception: " + string(e.what()));
     }
-
-    log.log( log.INFO, "END");
 }

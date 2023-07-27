@@ -3,36 +3,44 @@
 #include <iostream>
 #include <string>
 #include <filesystem>
+#include <fstream>
+#include <map>
 
 #include <Parser.hpp>
 
 
 using namespace std;
+namespace fs = std::filesystem;
 
 
 class Replicator{
 public:
     ///> system
-        /* standard */
     Replicator                          ();
     ~Replicator                         ();
 
     ///> interface
     void                copy            ();
-    void                gep_paths       (Parser* const _p);
+    string              recursion_copy  (const string& _path);
+    void                set_paths       (Parser* const _p);
 
 
 private:
-        /* Copy semantics */
+        /* Copy&Move semantics */
     Replicator                          (Replicator& _src) = delete;
     Replicator&         operator=       (Replicator const&) = delete;
-
-        /* Move semantics */
     Replicator                          (Replicator&& _src) = delete;
     Replicator&         operator=       (Replicator const&&) = delete;
+    
 
     string              src_path        = {""};
     string              rep_path        = {""};
+    const string        rep_new_dir     = {"/rep_copy"};
+
+    fstream             file_mn;
+    const string        container_files = {"/home/dev/Desktop/test_veeam/rep/container_files.txt"};
+    map<string, bool>   map_files;
+    bool                first_run       = true;
 
     Logger&             log                 = Logger::get_instance();
 };
