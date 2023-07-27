@@ -9,9 +9,9 @@ Parser::Parser                      (const int _argc, char* const _argv[]){
         log.log(log.WARN, "Arguments are NOT received : AUTOFILL with standard paths");
 
         //.. replicator pass paths
-        src_path.append("/home/dev/Desktop/test_veeam/build/src");
-        rep_path.append("/home/dev/Desktop/test_veeam/build/rep");
-        log_path.append("/home/dev/Desktop/test_veeam/build/log");
+        src_path.append(fs::absolute("media"));
+        rep_path.append(fs::absolute("rep"));
+        log_path.append(fs::absolute("log"));
         
         t.set_rep_interval(5);
     }
@@ -21,7 +21,7 @@ Parser::Parser                      (const int _argc, char* const _argv[]){
             switch (i){
             
             case 0:
-                log.log(log.COM, "exe path: " + string(_argv[i]));
+                log.log(log.COM, string(_argv[i]));
                 break;
             case 1:
                 src_path = string(_argv[i]);
@@ -35,9 +35,15 @@ Parser::Parser                      (const int _argc, char* const _argv[]){
                 log_path = string(_argv[i]);
                 break;
 
-            case 4:
-                t.set_rep_interval(stoi(string(_argv[i])));
-                break;
+            case 4:{
+                    long long _t = stoi(string(_argv[i]));
+                    if(_t <= 0){
+                       _t = 1;
+                    }
+                    cout << "time   : " <<  _t << endl;
+                    t.set_rep_interval(_t);
+                    break;
+                }
             
             default:
                 log.log(log.WARN, "Invalid args!");
