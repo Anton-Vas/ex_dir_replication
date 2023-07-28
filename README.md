@@ -20,6 +20,9 @@ Q: Why singletons ?
 Q: Why do some of the above classes have _filesystem/fstream_ ?
 >A: It is temporary. The proper way is to implement a custom class 'Files' with all necessary operations on files to simplify general code.
 
+Q: Can i replicate any folder ?
+> I wrote the code as universally as possible, taking into account the possibility of manipulating files outside the project. But this behaviour wasn`t tested properly, so i suggest moving the _TXT.txt_ file around to check _copy/remove/logging_ execution.
+
 ## Usage
 The stages below are based on my development process. To avoid any possible errors, follow my specifications:
 
