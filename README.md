@@ -8,7 +8,7 @@ ___Logger___ is a singleton class responsible for logging (file and terminal), l
 
 ___Parser___ is a singleton class responsible for parsing _ARGV/ARGC_ and some management in case of an empty argument.
 
-___SignalHandler___ is a class responsible for handling the Linus signals. Although, it has only the _SIGINT_ (Ctrl+C) handler it is possible to extend the list of signals.
+___SignalHandler___ is a class responsible for handling the Linux-type signals. Although, it has only the _SIGINT_ (Ctrl+C) handler it is possible to extend the list of signals.
 
 ___Replicator___ is a class responsible for the copying process. It`s based on the recursion throughout '_src_' folder, managing all present and missing files/folders. It relies on the _container_file.txt_ and _std::map_ to initiate a re-run without manually removing previous files/folders.
 
