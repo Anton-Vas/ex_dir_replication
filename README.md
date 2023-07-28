@@ -15,7 +15,7 @@ ___Replicator___ is a class responsible for the copying process. It`s based on t
 ___Timer___ is a class responsible for counting time for the Replicator interval copying and logging date.
 
 Q: Why singletons ?
->A: Both Logger and Parser are quite simple classes that play a supporting role so their lifetime/inheritance is not so important in my implementation
+>A: Both Logger and Timer are quite simple classes that play a supporting role so their lifetime/inheritance is not so important in my implementation
 
 Q: Why do some of the above classes have _filesystem/fstream_ ?
 >A: It is temporary. The proper way is to implement a custom class 'Files' with all necessary operations on files to simplify general code.
