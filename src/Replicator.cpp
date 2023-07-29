@@ -49,7 +49,7 @@ void Replicator::copy               (){
 
     ///> use recursion to copy
     recursion_copy(src_path);
-
+    
 
     ///> set 'container_file' with necessary paths & delete from 'rep' accordingly to the 'runtime_container'
     for(const auto& [key, val] : map_files){
@@ -57,8 +57,15 @@ void Replicator::copy               (){
             file_mn << key << "\n";
         }
         else{
-            fs::remove(key);
-            log.log(log.OK, "file was removed : " + key);
+            ///> important to specify for non-empty folders
+            if(fs::is_directory(key)){
+                fs::remove_all(key);
+                log.log(log.OK, "fold was removed : " + key);
+            }
+            else{
+                fs::remove(key);
+                log.log(log.OK, "file was removed : " + key);
+            }
         }
     }
     map_files.clear();
@@ -74,7 +81,12 @@ string Replicator::recursion_copy   (const string& _path){
         if(!fs::is_directory(entry)){
         
             ///> create a path similar to 'src' but in 'rep' dir
-            const string tmp_rep_file{fs::path(rep_path).string() + "/" + fs::path(entry).filename().string()};
+            string tmp_entry = fs::path(entry).string();
+            string::size_type i = tmp_entry.find(src_path);
+            if(i != string::npos){
+                tmp_entry.erase(i, src_path.length());
+            }
+            const string tmp_rep_file{fs::path(rep_path).string() + tmp_entry};
 
             ///> something new in 'src' that has to be copied to 'rep'
             if(!fs::exists(tmp_rep_file) && fs::exists(entry)){
@@ -114,28 +126,53 @@ string Replicator::recursion_copy   (const string& _path){
 
         ///> it`s a folder & recursion
         if(fs::is_directory(entry)){
-
-            ///> create a path similar to 'src' but in 'rep' dir
-            const string tmp_folder_path{fs::path(rep_path).string() + "/" + fs::path(entry).filename().string()};
             
-            if (first_run){
-                ///> new folder -> add to the map
-                map_files.insert(pair<string, bool>(tmp_folder_path, true));
+            ///> create a path similar to 'src' but in 'rep' dir
+            string tmp_entry = fs::path(entry).string();
+            string::size_type i = tmp_entry.find(src_path);
+            if(i != string::npos){
+                tmp_entry.erase(i, src_path.length());
             }
-            else if(map_files.at(tmp_folder_path) == false){
-                ///> existing file -> switch the flag
-                map_files.at(tmp_folder_path) = true;
-            }
+            const string tmp_folder_path{fs::path(rep_path).string() + tmp_entry};
 
-            ///> copy dir to the 'rep'
-            fs::create_directory(tmp_folder_path);
+            if(!fs::exists(tmp_folder_path) && fs::exists(entry)){
+
+                if (first_run){
+                    ///> new folder -> add to the map
+                    map_files.insert(pair<string, bool>(tmp_folder_path, true));
+                }
+                else if(map_files.at(tmp_folder_path) == false){
+                    ///> existing folder -> switch the flag
+                    map_files.at(tmp_folder_path) = true;
+                }
+
+                ///> copy dir to the 'rep'
+                fs::create_directory(tmp_folder_path);
+
+                log.log(log.OK, "fold was copied :  " + tmp_folder_path);
+            }
+            ///> something that was copied into 'rep' but we need to check for 'src'
+            else if  (fs::exists(tmp_folder_path) && fs::exists(entry)){
+
+                ///> if we copy the log file
+                log.auto_save();
+
+                ///> save for reboot
+                if(map_files.at(tmp_folder_path) == false){
+                    ///> it`s exists 100% -> switch the flag
+                    map_files.at(tmp_folder_path) = true;
+                }
+
+                log.log(log.OK, "no need to copy :  " + tmp_folder_path);
+            }
 
             ///> enter the recursion with 'src' path as a target
             recursion_copy(fs::absolute(entry));
         }
     }
 
-    ///> unlike in the Fibonacci seq. i don`t need to return val as i travel in 'src' dir.
+    ///> unlike in the Fibonacci seq. i don`t need to return val
+    ///>    as i travel throughout the 'src' dir.
     return "";
 }
 
@@ -149,19 +186,21 @@ void Replicator::set_paths          (Parser* const _p){
     ///> targeted 'rep' exist?
     if(!fs::exists(rep_path)){
         fs::create_directory(rep_path);
-        log.log(log.INFO, "'rep' path doesn`t exist : CREATE");
+        log.log(log.INFO, "'rep' path is created");
     }
     else{
         log.log(log.OK, "'rep' path exists");
     }
 
     ///> create specific folder for the replica (in case the user wants to save in non-vacant folder)
-    rep_path.append(rep_new_dir);
+    rep_new_fld.append("/" + fs::path(src_path).filename().string());
+    rep_path.append(rep_new_fld);
+    
     if(!fs::exists(rep_path)){
         fs::create_directory(rep_path);
-        log.log(log.OK, "'rep_new' folder with 'src' replica : CREATE");
+        log.log(log.OK, "'src' folder is created in 'rep'");
     }
     else{
-        log.log(log.OK, "'rep_new' path exists");
+        log.log(log.OK, "'src' folder exists in 'rep'");
     }
 }

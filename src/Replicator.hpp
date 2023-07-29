@@ -33,12 +33,13 @@ private:
     Replicator&         operator=       (Replicator const&&) = delete;
     
 
-    string              src_path        = {""};
-    string              rep_path        = {""};
-    const string        rep_new_dir     = {"/rep_copy"};
+    string              src_path        {""};
+    string              rep_path        {""};
+    // const string        rep_new_dir    {"/rep_copy"};
+    string              rep_new_fld     {""};
 
     fstream             file_mn;
-    const string        container_files = {"/home/dev/Desktop/test_veeam/rep/container_files.txt"};
+    const string        container_files {"/home/dev/Desktop/test_veeam/rep/container_files.txt"};
     map<string, bool>   map_files;
     bool                first_run       = true;
 

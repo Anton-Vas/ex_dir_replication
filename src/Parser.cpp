@@ -40,7 +40,6 @@ Parser::Parser                      (const int _argc, char* const _argv[]){
                     if(_t <= 0){
                        _t = 1;
                     }
-                    cout << "time   : " <<  _t << endl;
                     t.set_rep_interval(_t);
                     break;
                 }
