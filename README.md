@@ -66,7 +66,7 @@ I followed the next sequence:
 1. Config/build project;
 2. Run (this will demonstrate copy and ignore functionalities);
 3. Init _SIGINT_;
-4. Manually remove or change the location of the '*/FOLDER_ONE*' with _TXT.txt_ in it;
+4. Manually remove or change the location of the '*/FOLDER_TWO*' with _TXT.txt_ in it;
 5. Rerun the solution (this will demonstrate the removal action);
 
 If you`re too busy to test it yourself i made a screenshot to demonstrate the sequences above.
