@@ -1,6 +1,6 @@
 # test_veeam
 ## Task
-[link_to_file](media/Internal_Development_in_QA_SDET_Team_tesk_task.pdf)
+![IMG](media/Internal_Development_in_QA_SDET_Team_tesk_task.pdf)
 ## Implementation
 The source code has detailed commentaries for every action. Answering every logical key point and choice the code encounters. So this section is more of a general overview.
 
