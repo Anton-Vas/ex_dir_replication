@@ -1,18 +1,39 @@
-# test_veeam
+# ex_cpp_dir_file
+
+The idea behind this repo is to practice C++17 built-in file management capabilities. The following chapters contain all the necessary information to get acquainted with the code.
+
 ## Task
-[Link](media/Internal_Development_in_QA_SDET_Team_tesk_task.pdf)
+
+Implement a program that synchronizes two folders: source and replica. The program should maintain a full, identical copy of the source folder in the replica folder.
+
+Key points:
+
+1. Synchronization must be one-way: after the synchronization content of the 
+replica folder should be modified to exactly match the content of the source 
+folder;
+
+2. Synchronization should be performed periodically;
+
+3. File creation/copying/removal operations should be logged to a file and to the 
+console output;
+
+4. Folder paths, synchronization interval and log file path should be provided 
+using the command line arguments;
+
+5. Folder synchronization must be implemented in the source code.
+
 ## Implementation
 The source code has detailed commentaries for every action. Answering every logical key point and choice the code encounters. So this section is more of a general overview.
 
-___Logger___ is the singleton class responsible for logging (file and terminal), log file management and a few necessary functions, like _msg_ assembly.
+___Logger___ - is the singleton class responsible for logging (file and terminal), log file management and a few necessary functions, like _msg_ assembly.
 
-___Parser___ is the class responsible for parsing _ARGV/ARGC_ and some management in case of an empty argument.
+___Parser___ - is the class responsible for parsing _ARGV/ARGC_ and some management in case of an empty argument.
 
-___SignalHandler___ is the class responsible for handling Linux-type signals. Although, it has only the _SIGINT_ (Ctrl+C) handler it is possible to extend the list of signals.
+___SignalHandler___ - is the class responsible for handling Linux-type signals. Although, it has only the _SIGINT_ (Ctrl+C) handler it is possible to extend the list of signals.
 
-___Replicator___ is the class responsible for the copying process. It`s based on the recursion throughout '_src_' folder, managing all present and missing files/folders. It relies on the _container_file.txt_ and _std::map_ allowing the re-run without manually removing previous files/folders.
+___Replicator___ - is the class responsible for the copying process. It`s based on the recursion throughout '_src_' folder, managing all present and missing files/folders. It relies on the _container_file.txt_ and _std::map_ allowing the re-run without manually removing previous files/folders.
 
-___Timer___ is a class responsible for counting time for the Replicator interval copying and logging date.
+___Timer___ - is a class responsible for counting time for the Replicator interval copying and logging date.
 
 Q: Why singletons ?
 >A: Both Logger and Timer are quite simple classes that play a supporting role so their lifetime/inheritance is not so important in my implementation
