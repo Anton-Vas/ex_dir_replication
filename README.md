@@ -1,4 +1,4 @@
-# ex_cpp_dir_file
+# ex_dir_replication
 
 The idea behind this repo is to practice C++17 built-in file management capabilities. The following chapters contain all the necessary information to get acquainted with the code.
 
