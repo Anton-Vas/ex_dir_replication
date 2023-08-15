@@ -2,7 +2,7 @@
 
 The idea behind this repo is to practice C++17 built-in file management capabilities. The following chapters contain all the necessary information to get acquainted with the code.
 
-> :warning: **Some paths may be relevant to my personal Laptop. This mistake is obvious and will be solved when I got time :)** or if you want to run it yourself, please automate those paths and commit changes
+> :warning: **Some paths may be relevant to my personal Laptop. This mistake is obvious and will be solved when I got time  :expressionless:** or if you want to run it yourself, please automate those paths and commit changes
 
 ## Task
 
