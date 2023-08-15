@@ -71,7 +71,7 @@ private:
 
         /* log file */
     string          file_path           = {""};
-    string          file_old_path       = {"/home/dev/Desktop/test_veeam/build/log"};
+    string          file_old_path       = {"/home/dev/Desktop/ex_dir_replication/log"};
     string          file_name           = {""};
     const string    file_type           = {".txt"};
     fs::path        file_path_mn        = {""};

@@ -47,10 +47,12 @@ void Logger::set_paths              (){
     *   The 'log' file is created at the moment of the log obj. creation so i could add msg right away.
     *   At first the 'log' file placed in the temporary place but as the 'log_path' arrives, i change its location and continue logging there.
     */
-    file_close();
-    fs::copy_file(file_old_path + "/" + file_name, file_path + "/" + file_name);
-    fs::remove(file_old_path + "/" + file_name);
-    file_open( file_path + "/" + file_name);
+    if(string(file_old_path + "/" + file_name).compare(file_path + "/" + file_name) != 0){
+        file_close();
+        fs::copy_file(file_old_path + "/" + file_name, file_path + "/" + file_name);
+        fs::remove(file_old_path + "/" + file_name);
+        file_open( file_path + "/" + file_name);
+    }
 }
 
 void Logger::set_log_path        (const string& _p){

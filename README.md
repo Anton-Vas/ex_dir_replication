@@ -2,6 +2,7 @@
 
 The idea behind this repo is to practice C++17 built-in file management capabilities. The following chapters contain all the necessary information to get acquainted with the code.
 
+
 ## Task
 
 Implement a program that synchronizes two folders: source and replica. The program should maintain a full, identical copy of the source folder in the replica folder.
